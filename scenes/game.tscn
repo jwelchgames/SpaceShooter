@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxixfyobvlj1v"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_tsq8j"]
+[ext_resource type="Texture2D" uid="uid://cgta5xhinc3j" path="res://sprites/ship_I.png" id="2_l81we"]
+[ext_resource type="PackedScene" uid="uid://c1g5af8beqrn4" path="res://scenes/weapon.tscn" id="3_hhkjb"]
+[ext_resource type="Script" path="res://scripts/destrucible.gd" id="5_rcb5f"]
+[ext_resource type="Texture2D" uid="uid://bag6hwd7lhart" path="res://sprites/meteor_large.png" id="6_vyfbl"]
+
+[sub_resource type="Curve" id="Curve_6m6iv"]
+_data = [Vector2(0, 0.724907), 0.0, 0.0, 0, 0, Vector2(0.217822, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.557621), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="game" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="."]
+z_index = 2
+position = Vector2(560, 544)
+collision_layer = 2
+script = ExtResource("1_tsq8j")
+movement_type = "curve"
+move_curve = SubResource("Curve_6m6iv")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="player"]
+polygon = PackedVector2Array(0, -49, -33, 32, 0, 49, 33, 32, 0, -49)
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+modulate = Color(0.262745, 1, 0.203922, 1)
+texture = ExtResource("2_l81we")
+
+[node name="weapon" parent="player" instance=ExtResource("3_hhkjb")]
+
+[node name="destrucible" type="CharacterBody2D" parent="."]
+position = Vector2(569, 111)
+script = ExtResource("5_rcb5f")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="destrucible"]
+polygon = PackedVector2Array(0, -48, -32, -32, -48, 0, -33, 32, 0, 49, 33, 32, 48, 0, 32, -32)
+
+[node name="Sprite2D" type="Sprite2D" parent="destrucible"]
+texture = ExtResource("6_vyfbl")

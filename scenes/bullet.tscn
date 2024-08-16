@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://84qf3kui72tx"]
+
+[ext_resource type="Texture2D" uid="uid://cduifbydcya5k" path="res://sprites/effect_purple.png" id="1_141km"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="2_md3n0"]
+
+[node name="bullet" type="Sprite2D"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_141km")
+script = ExtResource("2_md3n0")
+detection_type = "area"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+z_index = 4
+target_position = Vector2(0, -50)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-32, -64, 32, -64, 32, 56, -32, 56, -32, -64)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

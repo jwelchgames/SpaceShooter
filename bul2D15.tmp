@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://84qf3kui72tx"]
+
+[ext_resource type="Texture2D" uid="uid://d0x6nutk8y84h" path="res://sprites/meteor_small.png" id="1_3okmc"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="2_md3n0"]
+
+[node name="bullet" type="Sprite2D"]
+modulate = Color(1, 0, 0.92549, 0.2)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_3okmc")
+script = ExtResource("2_md3n0")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+z_index = 4
+target_position = Vector2(0, -50)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
