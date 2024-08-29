@@ -2,11 +2,11 @@ extends CharacterBody2D
 
 var target_velocity:Vector2
 var max_speed:float = 400
-var accel = 4
-var decel = 8
+var accel:float = 4
+var decel:float = 8
 var reverse = 6
 
-@export_enum("basic", "linear", "curve") var movement_type = "basic"
+@export_enum("basic", "linear", "curve", "asteroid") var movement_type = "basic"
 @export var move_curve:Curve
 
 @onready var active_weapon = $weapon
@@ -25,7 +25,9 @@ func _physics_process(delta):
 		target_velocity.x = -max_speed
 	if !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right"):
 		target_velocity.x = 0
-		
+	
+	#target_velocity = target_velocity.rotated(rotation)
+	
 ### instant move
 	if movement_type == "basic":
 		velocity = target_velocity
@@ -68,10 +70,12 @@ func _physics_process(delta):
 			else:		
 				velocity.x += change
 	
+	#look_at(get_global_mouse_position())
+		
 	
 	###clamp the velocity so we don't exceed the max speed
 	velocity.x = clamp(velocity.x, -max_speed, max_speed)
-	skew = deg_to_rad( 10 * velocity.x / max_speed )
+	#skew = deg_to_rad( 10 * velocity.x / max_speed )
 	### at the end of the day, we always move
 	move_and_slide()
 	#move_and_collide(velocity * delta)
